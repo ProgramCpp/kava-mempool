@@ -1,6 +1,9 @@
 package main
 
 func main(){
-	processTransactions()
+	processTransactions(fileIO{
+		inputFilePath: "transactions.txt",
+		outputFilePath: "prioritized-transactions.txt",
+	})
 }
 
