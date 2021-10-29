@@ -2,38 +2,52 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 
 	"github.com/pkg/errors"
 )
 
-type io interface {
-	writeTransaction(transaction)
+type input interface {
+	// Reads the next transaction from the input stream.
+	// to start reading from the beginning, create a new instance
 	readTransaction() (transaction, error)
-}
-type fileIO struct {
-	inputFilePath  string
-	outputFilePath string
+	// Always cleanup once file IO is complete
+	close()
 }
 
-func (f fileIO) writeTransaction(_ transaction) {
-	panic("unimplemented")
+// Note: do not use the struct whitout initialization.
+// use NewFileIO instead
+type fileInput struct {
+	inputFilePath string
+
+	f *os.File
+	sc *bufio.Scanner
 }
 
-func (f fileIO) readTransaction() (transaction, error) {
-	file, err := os.Open(f.inputFilePath)
+func NewFileIO(iFile string) (input, error) {
+	f, err := os.Open(iFile)
 	if err != nil {
-		return transaction{}, errors.Wrap(err, "error opening file")
+		return nil, errors.Wrap(err, "error opening file")
 	}
-	defer file.Close()
+	return &fileInput{
+		inputFilePath: iFile,
+		f:             f,
+		sc:            bufio.NewScanner(f),
+	}, nil
+}
 
-	sc := bufio.NewScanner(file)
-	is_eof := sc.Scan()
-	if sc.Err() != nil {
-		return transaction{}, errors.Wrap(sc.Err(), "error reading file")
+func (f fileInput) close() {
+	f.f.Close()
+}
+
+
+func (f fileInput) readTransaction() (transaction, error) {
+	f.sc.Scan()
+	if f.sc.Err() != nil {
+		return transaction{}, errors.Wrap(f.sc.Err(), "error reading file")
 	}
-	if is_eof{
-		return transaction{}, nil
-	}
-	return transaction{}, nil	
+	var txn transaction
+	fmt.Sscanf(f.sc.Text(), "TxHash=%s Gas=%d FeePerGas=%f Signature=%s", &txn.hash, &txn.gas, &txn.feePerGas, &txn.signature)
+	return txn, nil
 }
