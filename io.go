@@ -27,7 +27,7 @@ type fileInput struct {
 	sc *bufio.Scanner
 }
 
-func NewFileIO(iFile string) (input, error) {
+func NewFileInput(iFile string) (input, error) {
 	f, err := os.Open(iFile)
 	if err != nil {
 		return nil, errors.Wrap(err, "error opening file")

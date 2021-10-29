@@ -32,7 +32,7 @@ func TestReadTransaction_ShouldReturnEmptyTransactionfromEmptyFile(t *testing.T)
 	testDir := testSetup(inputFile, []byte(""))
 	defer os.RemoveAll(testDir)
 
-	file, err := NewFileIO(filepath.Join(testDir, inputFile))
+	file, err := NewFileInput(filepath.Join(testDir, inputFile))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -49,7 +49,7 @@ func TestReadTransaction_ShouldReturnTheTransaction(t *testing.T) {
 	testDir := testSetup(inputFile, []byte("TxHash=0x54030E30503453949230403 Gas=300000 FeePerGas=0.001 Signature=0x54030E30503453949230403"))
 	defer os.RemoveAll(testDir)
 
-	file, err := NewFileIO(filepath.Join(testDir, inputFile))
+	file, err := NewFileInput(filepath.Join(testDir, inputFile))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -68,7 +68,7 @@ func TestReadTransaction_ShouldReturnOneTransactionAtATime(t *testing.T) {
 			"TxHash=2 Gas=4 FeePerGas=0.001 Signature=def"))
 	defer os.RemoveAll(testDir)
 
-	file, err := NewFileIO(filepath.Join(testDir, inputFile))
+	file, err := NewFileInput(filepath.Join(testDir, inputFile))
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -1,8 +1,10 @@
 package main
 
 func main(){
-	processTransactions(fileInput{
-		inputFilePath: "transactions.txt",
-	})
+	transactionProcessor{
+		capacity:       5000,
+		inputFilePath:  "transactions.txt",
+		outputFilePath: "prioritized-transactions.txt",
+	}.processTransactions()
 }
 
