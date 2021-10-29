@@ -13,6 +13,7 @@ A priority mempool that orders transactions by fee. this mempool is useful to pr
 
 ## Run Steps
 
+
 ## ADR
 ### [10/28/2021] 
 #### Summary: 
@@ -31,6 +32,7 @@ do not read the whole file at once
 
 
 ## Future Work
+ - implement double ended priority queue in order to remove and process HIGHEST priority transaction first
  - create sub packages for different concerns in order to improve readability and maintainability
  - accept input and output files as command line arguments
 

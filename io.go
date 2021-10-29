@@ -6,12 +6,14 @@ import (
 	"os"
 
 	"github.com/pkg/errors"
+	"github.com/programcpp/kava-mempool/transaction"
 )
 
 type input interface {
 	// Reads the next transaction from the input stream.
 	// to start reading from the beginning, create a new instance
-	readTransaction() (transaction, error)
+	// returns empty transaction when EOF is reached
+	readTransaction() (transaction.Transaction, error)
 	// Always cleanup once file IO is complete
 	close()
 }
@@ -42,12 +44,12 @@ func (f fileInput) close() {
 }
 
 
-func (f fileInput) readTransaction() (transaction, error) {
+func (f fileInput) readTransaction() (transaction.Transaction, error) {
 	f.sc.Scan()
 	if f.sc.Err() != nil {
-		return transaction{}, errors.Wrap(f.sc.Err(), "error reading file")
+		return transaction.Transaction{}, errors.Wrap(f.sc.Err(), "error reading file")
 	}
-	var txn transaction
-	fmt.Sscanf(f.sc.Text(), "TxHash=%s Gas=%d FeePerGas=%f Signature=%s", &txn.hash, &txn.gas, &txn.feePerGas, &txn.signature)
+	var txn transaction.Transaction
+	fmt.Sscanf(f.sc.Text(), "TxHash=%s Gas=%d FeePerGas=%f Signature=%s", &txn.Hash, &txn.Gas, &txn.FeePerGas, &txn.Signature)
 	return txn, nil
 }

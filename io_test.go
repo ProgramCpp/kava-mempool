@@ -9,6 +9,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
+	"github.com/programcpp/kava-mempool/transaction"
 )
 
 func testSetup(file string, content []byte) string {
@@ -36,10 +38,10 @@ func TestReadTransaction_ShouldReturnEmptyTransactionfromEmptyFile(t *testing.T)
 	}
 	txn, err := file.readTransaction()
 	assert.NoError(t, err)
-	assert.Equal(t, "", txn.hash)
-	assert.Equal(t, 0, txn.gas)
-	assert.Equal(t, float32(0), txn.feePerGas)
-	assert.Equal(t, "", txn.signature)
+	assert.Equal(t, "", txn.Hash)
+	assert.Equal(t, 0, txn.Gas)
+	assert.Equal(t, float32(0), txn.FeePerGas)
+	assert.Equal(t, "", txn.Signature)
 }
 
 func TestReadTransaction_ShouldReturnTheTransaction(t *testing.T) {
@@ -53,10 +55,10 @@ func TestReadTransaction_ShouldReturnTheTransaction(t *testing.T) {
 	}
 	txn, err := file.readTransaction()
 	assert.NoError(t, err)
-	assert.Equal(t, "0x54030E30503453949230403", txn.hash)
-	assert.Equal(t, 300000, txn.gas)
-	assert.Equal(t, float32(.001), txn.feePerGas)
-	assert.Equal(t, "0x54030E30503453949230403", txn.signature)
+	assert.Equal(t, "0x54030E30503453949230403", txn.Hash)
+	assert.Equal(t, 300000, txn.Gas)
+	assert.Equal(t, float32(.001), txn.FeePerGas)
+	assert.Equal(t, "0x54030E30503453949230403", txn.Signature)
 }
 
 func TestReadTransaction_ShouldReturnOneTransactionAtATime(t *testing.T) {
@@ -72,19 +74,19 @@ func TestReadTransaction_ShouldReturnOneTransactionAtATime(t *testing.T) {
 	}
 	txn, err := file.readTransaction()
 	assert.NoError(t, err)
-	assert.Equal(t, transaction{
-		hash:      "1",
-		gas:       3,
-		feePerGas: 0.001,
-		signature: "abc",
+	assert.Equal(t, transaction.Transaction{
+		Hash:      "1",
+		Gas:       3,
+		FeePerGas: 0.001,
+		Signature: "abc",
 	}, txn)
 
 	txn, err = file.readTransaction()
 	assert.NoError(t, err)
-	assert.Equal(t, transaction{
-		hash:      "2",
-		gas:       4,
-		feePerGas: 0.001,
-		signature: "def",
+	assert.Equal(t, transaction.Transaction{
+		Hash:      "2",
+		Gas:       4,
+		FeePerGas: 0.001,
+		Signature: "def",
 	}, txn)
 }
