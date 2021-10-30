@@ -20,8 +20,8 @@ func TestProcessTransactions_ShouldSaveTransactionsAsPerPriority(t *testing.T) {
 	testInputFile := filepath.Join(testDir, "testInput.txt")
 	err = ioutil.WriteFile(testInputFile, []byte(
 		"TxHash=1 Gas=3 FeePerGas=0.001 Signature=abc\n"+
-			"TxHash=2 Gas=4 FeePerGas=0.001 Signature=def"+
-			"TxHash=3 Gas=5 FeePerGas=0.001 Signature=ghi"+
+			"TxHash=2 Gas=4 FeePerGas=0.001 Signature=def\n"+
+			"TxHash=3 Gas=5 FeePerGas=0.001 Signature=ghi\n"+
 			"TxHash=4 Gas=6 FeePerGas=0.001 Signature=jkl"), 0666)
 	if err != nil {
 		log.Fatal(err)
@@ -40,7 +40,7 @@ func TestProcessTransactions_ShouldSaveTransactionsAsPerPriority(t *testing.T) {
 	output, err := ioutil.ReadFile(outputTestFile)
 	assert.NoError(t, err)
 	assert.Equal(t, []byte(
-		"TxHash=2 Gas=4 FeePerGas=0.001 Signature=def"+
-			"TxHash=3 Gas=5 FeePerGas=0.001 Signature=ghi"+
-			"TxHash=4 Gas=6 FeePerGas=0.001 Signature=jkl"), output)
+		"TxHash=2 Gas=4 FeePerGas=0.001 Signature=def\n"+
+			"TxHash=3 Gas=5 FeePerGas=0.001 Signature=ghi\n"+
+			"TxHash=4 Gas=6 FeePerGas=0.001 Signature=jkl\n"), output)
 }

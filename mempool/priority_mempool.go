@@ -39,6 +39,9 @@ func (p *PriorityMempool) Insert(t transaction.Transaction) {
 
 // removes the lowest priority transaction
 func (p *PriorityMempool) Remove() transaction.Transaction {
+	if len(p.transactions) == 0 {
+		return transaction.Transaction{}
+	}
 	t := heap.Pop(&p.transactions)
 	return t.(transaction.Transaction)
 }

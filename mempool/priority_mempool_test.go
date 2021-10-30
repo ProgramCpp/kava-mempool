@@ -176,3 +176,11 @@ func TestInsert_ShouldInsertMultipleTransactionsPrioritizedByFee(t *testing.T) {
 		Signature: "ghi",
 	}, txn)
 }
+
+
+func TestRemove_ShouldReturnEmptyTransaction(t *testing.T) {
+	testPool := NewMempool(1)
+	txn := testPool.Remove()
+
+	assert.Equal(t, transaction.Transaction{}, txn)
+}
