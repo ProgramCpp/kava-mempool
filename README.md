@@ -5,7 +5,7 @@ this priority mempool,
 - reads transactions from a file, stores them ordered by __lowest transaction fee* to highest__
 - drops lowest priority trnsaction once the mempool capacity is full
 
-* transaction fee = Gas * FeePerGas
+\* transaction fee = Gas * FeePerGas
 
 example transaction format,
 ```
