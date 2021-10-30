@@ -32,8 +32,9 @@ do not read the whole file at once
 
 
 ## Future Work
- - implement double ended priority queue in order to remove and process HIGHEST priority transaction first
+ - process HIGHEST priority transaction first
  - create sub packages for different concerns in order to improve readability and maintainability. ex: processor, io
+ - move private members of the package to internal package
  - accept input and output files as command line arguments
 
 

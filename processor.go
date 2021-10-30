@@ -19,6 +19,8 @@ func (t transactionProcessor) processTransactions() error {
 	// 4. Create priority mempool
 	// 5. Write sorted transactions to file
 	inputHandle, err := NewFileInput(t.inputFilePath)
+	defer inputHandle.close()
+	
 	if err != nil {
 		return errors.Wrap(err, "error opening input file")
 	}

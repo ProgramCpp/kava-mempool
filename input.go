@@ -15,11 +15,12 @@ type input interface {
 	// returns empty transaction when EOF is reached
 	readTransaction() (transaction.Transaction, error)
 	// Always cleanup once file IO is complete
-	close()
+	// returns error if already closed
+	close() error
 }
 
 // Note: do not use the struct whitout initialization.
-// use NewFileIO instead
+// use NewFileInput instead
 type fileInput struct {
 	inputFilePath string
 
@@ -39,8 +40,12 @@ func NewFileInput(iFile string) (input, error) {
 	}, nil
 }
 
-func (f fileInput) close() {
-	f.f.Close()
+func (f fileInput) close() error {
+	err := f.f.Close()
+	if err != nil {
+		return errors.Wrap(err, "error closing file")
+	}
+	return nil
 }
 
 
