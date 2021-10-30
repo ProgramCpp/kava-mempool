@@ -35,7 +35,7 @@ func (t transactionProcessor) processTransactions() error {
 	}
 	// initilize mempool
 	mp := mempool.NewMempool(t.capacity)
-	//push all the file transactions to mempool
+	//push all the transactions in input file to mempool
 	for {
 		txn, err := inputHandle.readTransaction()
 		if err != nil {
