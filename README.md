@@ -57,6 +57,7 @@ the executable by default,
 1. builds mempool of capacity 5000
 2. reads transactions from `./transactions.txt` and writes prioritized transactions to `./prioritized-transactions.txt`
 
+Running the command when the output file already exists, appends the output to existing contents of the file. HINT: try removing the output file.
 
 ## ADR
 ### [10/28/2021] 
