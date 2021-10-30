@@ -40,7 +40,7 @@ func TestReadTransaction_ShouldReturnEmptyTransactionfromEmptyFile(t *testing.T)
 	assert.NoError(t, err)
 	assert.Equal(t, "", txn.Hash)
 	assert.Equal(t, 0, txn.Gas)
-	assert.Equal(t, float32(0), txn.FeePerGas)
+	assert.Equal(t, float64(0), txn.FeePerGas)
 	assert.Equal(t, "", txn.Signature)
 }
 
@@ -57,7 +57,7 @@ func TestReadTransaction_ShouldReturnTheTransaction(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "0x54030E30503453949230403", txn.Hash)
 	assert.Equal(t, 300000, txn.Gas)
-	assert.Equal(t, float32(.001), txn.FeePerGas)
+	assert.Equal(t, float64(.001), txn.FeePerGas)
 	assert.Equal(t, "0x54030E30503453949230403", txn.Signature)
 }
 

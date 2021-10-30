@@ -34,11 +34,11 @@ func NewFileOutput(file string) (output, error) {
 	}
 	return fileOutput{
 		filePath: file,
-		f: f,
-		}, nil
+		f:        f,
+	}, nil
 }
 
-func (f fileOutput)Close() error{
+func (f fileOutput) Close() error {
 	err := f.f.Close()
 	if err != nil {
 		return errors.Wrap(err, "error closing file")
@@ -47,12 +47,15 @@ func (f fileOutput)Close() error{
 }
 
 func (f fileOutput) WriteTransaction(t transaction.Transaction) error {
-	feePerGas := strconv.FormatFloat(float64(t.FeePerGas), 'f', -1, 32)
 	formattedTransaction := fmt.Sprintf("TxHash=%s Gas=%d FeePerGas=%s Signature=%s\n",
-		t.Hash, t.Gas, feePerGas, t.Signature)
+		t.Hash, t.Gas, formatFeePerGas(t.FeePerGas), t.Signature)
 	_, err := f.f.WriteString(formattedTransaction)
 	if err != nil {
 		return errors.Wrap(err, "error writing to file")
 	}
 	return nil
+}
+
+func formatFeePerGas(f float64) string {
+	return strconv.FormatFloat(f, 'f', -1, 64)
 }

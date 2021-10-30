@@ -69,5 +69,9 @@ func TestWriteTransaction_shouldWriteMultipleTransactions(t *testing.T) {
 	output, err := ioutil.ReadFile(testFile)
 	assert.NoError(t, err)
 	assert.Equal(t, []byte("TxHash=1 Gas=10 FeePerGas=0.1 Signature=abc\n"+
-	"TxHash=2 Gas=20 FeePerGas=0.2 Signature=def\n"), output)
+		"TxHash=2 Gas=20 FeePerGas=0.2 Signature=def\n"), output)
+}
+
+func TestFeePerGas_should(t *testing.T) {
+	assert.Equal(t, "0.8770012381849748", formatFeePerGas(float64(0.8770012381849748)))
 }

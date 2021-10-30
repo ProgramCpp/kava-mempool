@@ -8,7 +8,7 @@ type TransactionsHeap []transaction.Transaction
 
 func (t TransactionsHeap) Len() int { return len(t) }
 func (t TransactionsHeap) Less(i, j int) bool {
-	return t[i].FeePerGas*float32(t[i].Gas) < t[j].FeePerGas*float32(t[j].Gas)
+	return t[i].FeePerGas*float64(t[i].Gas) < t[j].FeePerGas*float64(t[j].Gas)
 }
 func (t TransactionsHeap) Swap(i, j int) {
 	t[i], t[j] = t[j], t[i]
@@ -24,4 +24,3 @@ func (t *TransactionsHeap) Pop() interface{} {
 	*t = (*t)[0 : n-1]
 	return txn
 }
-
